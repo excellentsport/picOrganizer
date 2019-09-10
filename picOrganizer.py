@@ -31,8 +31,7 @@ filepath = os.getcwd()
 for file in os.listdir(filepath):
     if file.endswith(imagetypes):  # 'endswith() can be fed a tuple.
         try: #Try to get the 'date taken' data from an image file, if it doesn't have this info, it throws an exception.
-            fulldate = get_date_taken(file)
-            year = fulldate[0:4] #standard output date is year first.
+            year = get_date_taken(file)
             sortfile(file,year)
         except: #When "date taken" isn't found in exif data, get the year from the filename
             print('Date taken not found in exif data for ' + file + '.')
