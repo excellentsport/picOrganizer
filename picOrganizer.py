@@ -7,8 +7,8 @@ def get_date_taken(path):
 def sortfile(filename,yeartaken):
     if not os.path.exists(yeartaken):
         os.makedirs(yeartaken)
-    #TODO finish sorting code
-
+    os.rename(filename,yeartaken+'\\'+filename)
+    
 filepath = os.getcwd()
 
 for file in os.listdir(filepath):
