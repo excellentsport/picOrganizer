@@ -8,11 +8,13 @@ def sortfile(filename,yeartaken):
     if not os.path.exists(yeartaken):
         os.makedirs(yeartaken)
     os.rename(filename,yeartaken+'\\'+filename)
+
+filetypes = ('.png', '.jpeg', '.jpg', '.gif', '.mov', 'mp4')
     
 filepath = os.getcwd()
 
 for file in os.listdir(filepath):
-    if file.endswith(".png") or file.endswith(".jpeg") or file.endswith(".jpg"):
+    if file.endswith(filetypes):
         fullpath = filepath + "\\" + file
         print(fullpath)
         
