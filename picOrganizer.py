@@ -5,7 +5,9 @@ def get_date_taken(path):
     return Image.open(path)._getexif()[36867]
 
 def sortfile(filename,yeartaken):
-    #TODO write this function
+    if not os.path.exists(yeartaken):
+        os.makedirs(yeartaken)
+    #TODO finish sorting code
 
 filepath = os.getcwd()
 
@@ -19,5 +21,5 @@ for file in os.listdir(filepath):
             year = fulldate[0:4]
             sortfile(file,year)
         except:
-            year = None
+            year = "No Year"
             sortfile(file,year)
