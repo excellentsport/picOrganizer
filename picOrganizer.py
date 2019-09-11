@@ -3,7 +3,6 @@ import re
 from PIL import Image
 
 # TODO: add argparse.ArgumentParser to designate WD. Consider option --dry-run.
-# TODO: run this through linter
 
 
 # get the year
