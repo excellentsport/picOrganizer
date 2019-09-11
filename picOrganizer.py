@@ -2,7 +2,7 @@ import os, time, re
 from PIL import Image
 
 #get the year 
-def get_date_taken(path):
+def year_taken(path):
     date_taken = Image.open(path)._getexif()[36867]
     return date_taken[0:4]
 
@@ -31,7 +31,7 @@ file_path = os.getcwd()
 for file_name in os.listdir(file_path):
     if file_name.endswith(image_types):  # 'endswith() can be fed a tuple.
         try: #Try to get the 'date taken' data from an image file, if it doesn't have this info, it throws an exception.
-            year = get_date_taken(file_name)
+            year = year_taken(file_name)
             sort_file(file_name,year)
         except: #When "date taken" isn't found in exif data, get the year from the file name
             print('Date taken not found in exif data for ' + file_name + '.')
