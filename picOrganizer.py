@@ -16,7 +16,7 @@ def year_taken(path):
 def sort_file(file_name, year_taken):
 	if not os.path.exists(year_taken):
 		os.makedirs(year_taken)
-	os.rename(file_name, year_taken+'\\'+file_name)
+	os.rename(file_name, year_taken + '\\' + file_name)
 	print(file_name + ' moved.')
 
 
@@ -37,36 +37,36 @@ file_path = os.getcwd()
 
 
 def main():
-	
+
 	# Process images
 	for file_name in os.listdir(file_path):
 		if file_name.endswith(image_types):  # 'endswith() can be fed a tuple.
 			try:
-				# Try to get the 'date taken' data from image, lack of info throws an exception.
+				# Try to get the 'date taken' image, lack of info throws an exception.
 				year = year_taken(file_name)
 				sort_file(file_name, year)
 			except:
-				# When 'date taken' isn't found in exif data, get the year from the file name
+				# If 'date taken' not in exif data, get the year from the file name
 				print('Date taken not found in exif data for ' + file_name + '.')
 				regex_match = year_regex.search(file_name)
 
 				if regex_match is None:
 					# if you can't find year in the file name, leave it alone.
-					print('Year not found in file name for ' + file_name + ', file not moved.')
+					print('Year not found in filename for ' + file_name + ', file not moved.')
 				else:
 					year = regex_match.group()
 					sort_file(file_name, year)
-	
+
 	# Process videos
 	for file_name in os.listdir(file_path):
 		if file_name.endswith(video_types):
-	
+
 			try:
 				# No exif data in videos - do a regex search for year in the file name
 				regex_match = year_regex.search(file_name)
 				if regex_match is None:
 					# If a year isn't found, then leave the file there to be manually sorted.
-					print('Year not found in file name for ' + file_name + ', file not moved.')
+					print('Year not found in filename for ' + file_name + ', file not moved.')
 				else:
 					year = regex_match.group()
 					sort_file(file_name, year)
