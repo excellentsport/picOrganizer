@@ -1,5 +1,6 @@
 import os
 import re
+import argparse
 from PIL import Image
 
 # TODO: add argparse.ArgumentParser to designate WD. Consider option --dry-run.
@@ -18,22 +19,6 @@ def sort_file(file_name, year_photo_taken):
         os.makedirs(year_photo_taken)
     os.rename(file_name, year_photo_taken + '\\' + file_name)
     print(file_name + ' moved.')
-
-
-# define what image and video types to search for
-IMAGE_TYPES = ('.png', '.jpeg', '.jpg', '.gif')
-video_types = ('.mov', 'mp4')
-
-# Search for 4 digit string starting with '20'
-year_regex = re.compile(r'20(\d){2}')
-
-# You can either place this script in the folder to sort, or you can manually
-# specify which directory you want. To organize the script directory, comment
-# out the second two lines of code in this block. To organize a specific directory,
-# comment out the first line of code in this block.
-file_path = os.getcwd()
-# file_path = os.path.join(os.path.expanduser('~'), "Dropbox", "Camera Uploads")  # os.path.expanduser('~') gets the path for the user's home folder.
-# os.chdir(file_path)
 
 
 def main():
@@ -59,7 +44,7 @@ def main():
 
     # Process videos
     for file_name in os.listdir(file_path):
-        if file_name.endswith(video_types):
+        if file_name.endswith(VIDEO_TYPES):
 
             try:
                 # No exif data in videos - do a regex search for year in the file name
@@ -72,6 +57,32 @@ def main():
                     sort_file(file_name, year)
             except:
                 print('Unable to sort ' + file_name + '.')
+
+def dir_path_check(string):
+    """Checks if user entered string is a valid folder path"""
+    if os.path.isdir(string):
+        return string
+    else:
+        raise NotADirectoryError(string)
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Iterate through folder to sort images and media')
+    parser.add_argument('-d', '--dry-run', description = 'Do a dry run of the file sorting')
+    parser.add_argument('--path', type=dir_path_check, description = 'Folder path of files')
+    #TODO: Finish me!
+
+# TODO: Deal with setting up the three options below to work based on user arguments
+file_path = args.path
+file_path = os.getcwd()
+file_path = os.path.join(os.path.expanduser('~'), "Dropbox", "Camera Uploads")  # os.path.expanduser('~') gets the path for the user's home folder.
+os.chdir(file_path) #TODO: Why did the directory need to be changed to the different file path? Is this necessary for all non-script paths?
+
+# define what image and video types to search for
+IMAGE_TYPES = ('.png', '.jpeg', '.jpg', '.gif')
+VIDEO_TYPES = ('.mov', 'mp4')
+
+# Search for 4 digit string starting with '20'
+year_regex = re.compile(r'20(\d){2}')
 
 
 if __name__ == "__main__":
