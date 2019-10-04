@@ -67,8 +67,8 @@ def dir_path_check(string):
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Iterate through folder to sort images and media')
-    parser.add_argument('-d', '--dry-run', description = 'Do a dry run of the file sorting')
-    parser.add_argument('--path', type=dir_path_check, description = 'Folder path of files')
+    parser.add_argument('-d', '--dryrun', description = 'Do a dry run of the file sorting',default=False)
+    parser.add_argument('--path', type=dir_path_check, description = 'Folder path of files',default=os.getcwd())
     #TODO: Finish me!
 
 # TODO: Deal with setting up the three options below to work based on user arguments
