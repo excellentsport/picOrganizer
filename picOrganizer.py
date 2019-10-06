@@ -21,7 +21,7 @@ def sort_file(file_name, year_photo_taken):
     print(file_name + ' moved.')
 
 
-def main():
+def main():  
 
     # Process images
     for file_name in os.listdir(file_path):
@@ -63,16 +63,21 @@ def dir_path_check(string):
     if os.path.isdir(string):
         return string
     else:
-        raise NotADirectoryError(string)
+        # I could also use "raise NotADirectoryError(string)" but this will
+        # convey same message with less confusion for the non-technical
+        print("\n'" + string + "' is not a valid path.")
+        quit()
 
-def parse_args():
-    parser = argparse.ArgumentParser(description='Iterate through folder to sort images and media')
-    parser.add_argument('-d', '--dry-run', description = 'Do a dry run of the file sorting')
-    parser.add_argument('--path', type=dir_path_check, description = 'Folder path of files')
-    #TODO: Finish me!
+parser = argparse.ArgumentParser(description='Iterate through folder to sort images and media')
+parser.add_argument('-dr', '--dry-run', help='Do a dry run of the file sorting',
+                action ="store_true", default=False)
+parser.add_argument('-p', '--path', type=dir_path_check, help='Folder path of files'
+                default=DEFAULT_FILE_PATH)
+args = parser.parse_args()
+#TODO: Finish me!
 
 # TODO: Deal with setting up the three options below to work based on user arguments
-file_path = args.path
+#file_path = args.path
 file_path = os.getcwd()
 file_path = os.path.join(os.path.expanduser('~'), "Dropbox", "Camera Uploads")  # os.path.expanduser('~') gets the path for the user's home folder.
 os.chdir(file_path) #TODO: Why did the directory need to be changed to the different file path? Is this necessary for all non-script paths?
@@ -83,6 +88,9 @@ VIDEO_TYPES = ('.mov', 'mp4')
 
 # Search for 4 digit string starting with '20'
 year_regex = re.compile(r'20(\d){2}')
+
+# File path to use if no path passed on command line
+DEFAULT_FILE_PATH = os.getcwd()
 
 
 if __name__ == "__main__":
